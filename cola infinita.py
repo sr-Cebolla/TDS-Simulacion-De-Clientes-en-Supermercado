@@ -9,7 +9,7 @@ pygame.init()
 
 # Configuración de pantalla
 WIDTH, HEIGHT = 1000, 600
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode((WIDTH, HEIGHT),pygame.RESIZABLE)
 pygame.display.set_caption("Simulación de Supermercado")
 
 # Colores
@@ -18,6 +18,7 @@ BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
+FONT = pygame.font.SysFont("Arial", 24)
 COLORS = [(random.randint(50, 200), random.randint(50, 200), random.randint(50, 200)) for _ in range(20)]
 
 # Parámetros de simulación
@@ -163,16 +164,22 @@ def main():
         # Actualizar clientes
         for cliente in clientes:
             cliente.mover()
+            
+        # Dibujar información
+        def mostrar_metricas():
+            metricas = [
+                f"Cajeros activos: {NUM_CAJEROS} (↑/↓ para cambiar)",
+                f"Velocidad: {VELOCIDAD_CAJERO}/10 (←/→ para cambiar)"
+            ]
+            
+            for i, texto in enumerate(metricas):
+                texto_surface = FONT.render(texto, True, BLACK)
+                screen.blit(texto_surface, (10, 10 + i * 30))
         
         # Dibujar
         screen.fill(WHITE)
+        mostrar_metricas()
         
-        # Dibujar información
-        font = pygame.font.SysFont(None, 36)
-        texto_cajeros = font.render(f"Cajeros: {NUM_CAJEROS} (↑/↓ para cambiar)", True, BLACK)
-        texto_velocidad = font.render(f"Velocidad: {VELOCIDAD_CAJERO}/10 (←/→ para cambiar)", True, BLACK)
-        screen.blit(texto_cajeros, (20, 20))
-        screen.blit(texto_velocidad, (20, 60))
         
         # Dibujar cajeros y clientes
         for cajero in cajeros:
