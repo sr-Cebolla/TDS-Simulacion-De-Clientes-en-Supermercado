@@ -123,7 +123,7 @@ def main():
     cajeros = [Cajero(i, 150 + i * 200) for i in range(NUM_CAJEROS)]
     clientes = []
     tiempo_ultimo_cliente = time.time()
-    intervalo_clientes = 3  # Segundos entre llegada de clientes
+intervalo_clientes = random.uniform(1, 3)  # Genera un número aleatorio entre 1 y 3 segundos
     
     while running:
         current_time = time.time()
@@ -178,8 +178,7 @@ def main():
         
         # Dibujar
         screen.fill(WHITE)
-        mostrar_metricas()
-        
+        mostrar_metricas()        
         
         # Dibujar cajeros y clientes
         for cajero in cajeros:
